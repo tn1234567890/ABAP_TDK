@@ -1,0 +1,5 @@
+CLASS zbp_r_tdk_employee DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zr_tdk_employee.
+ENDCLASS.
+
+CLASS zbp_r_tdk_employee IMPLEMENTATION.
+ENDCLASS.

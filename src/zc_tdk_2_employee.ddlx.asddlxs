@@ -1,0 +1,53 @@
+@Metadata.layer: #CUSTOMER
+@UI.headerInfo:
+{
+typeNamePlural: 'Employees',
+typeName: 'Employee',
+title.value: 'EmployeeName'
+}
+annotate view ZC_TDK_2_Employee with
+{
+  @UI.facet:
+  [
+  { position: 10, targetQualifier: 'EmployeeDetails', label: 'Employee
+Details', type: #FIELDGROUP_REFERENCE },
+  { position: 20, targetQualifier: 'AdminData', label: 'Administrative Data',
+  type: #FIELDGROUP_REFERENCE },
+  { position: 30, targetElement: '_Requests', label: 'Requests', type:
+  #LINEITEM_REFERENCE }
+  ]
+  @UI.fieldGroup: [{ position: 10, qualifier: 'AdminData' }]
+  EmployeeUuid;
+
+  @UI.lineItem: [{ position: 20 }]
+  @UI.fieldGroup: [{ position: 10, qualifier: 'EmployeeDetails' }]
+  @UI.selectionField: [{ position: 10 }]
+  EmployeeNr;
+
+  @UI.lineItem: [{ position: 30 }]
+  @UI.fieldGroup: [{ position: 20, qualifier: 'EmployeeDetails' }]
+  FirstName;
+
+  @UI.lineItem: [{ position: 40 }]
+  @UI.fieldGroup: [{ position: 30, qualifier: 'EmployeeDetails' }]
+  LastName;
+
+  @UI.lineItem: [{ position: 50 }]
+  @UI.fieldGroup: [{ position: 40, qualifier: 'EmployeeDetails' }]
+  @UI.selectionField: [{ position: 20 }]
+  EntryDate;
+
+  /* Administrative Data */
+  @UI.fieldGroup: [{ position: 20, qualifier: 'AdminData' }]
+  CreatedBy;
+
+  @UI.fieldGroup: [{ position: 30, qualifier: 'AdminData' }]
+  CreatedAt;
+
+  @UI.fieldGroup: [{ position: 40, qualifier: 'AdminData' }]
+  LastChangedBy;
+
+  @UI.fieldGroup: [{ position: 50, qualifier: 'AdminData' }]
+  LastChangedAt;
+
+}

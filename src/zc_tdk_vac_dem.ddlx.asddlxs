@@ -1,0 +1,52 @@
+@Metadata.layer: #CUSTOMER
+@UI.headerInfo:
+{
+typeName: 'Demand',
+typeNamePlural: 'Demands',
+title.value: 'CurrYear',
+description.value: 'VacDays'
+}
+annotate view ZC_TDK_Vac_Dem with
+{
+/* Facets */
+@UI.facet:
+[
+{ position: 10, targetQualifier: 'RequestData', label: 'Request Details',
+type: #FIELDGROUP_REFERENCE },
+{ position: 20, targetQualifier: 'AdminData', label: 'Administrative Data',
+type: #FIELDGROUP_REFERENCE }
+]
+/* Fields */
+@UI.fieldGroup: [{ position: 10, qualifier: 'AdminData' }]
+DemUuid;
+
+@UI.lineItem: [{ position: 20 }]
+@UI.fieldGroup: [{ position: 20, qualifier: 'RequestData' }]
+EmployeeUuid;
+
+@UI.lineItem: [{ position: 30 }]
+@UI.fieldGroup: [{ position: 30, qualifier: 'RequestData' }]
+CurrYear;
+
+@UI.lineItem: [{ position: 40 }]
+@UI.fieldGroup: [{ position: 40, qualifier: 'RequestData' }]
+VacDays;
+
+/*
+@UI.lineItem: [{ position: 50 }]
+@UI.fieldGroup: [{ position: 50, qualifier: 'RequestData' }]
+UsedVacDays;
+*/
+/* Administrative Data */
+@UI.fieldGroup: [{ position: 20, qualifier: 'AdminData' }]
+CreatedBy;
+
+@UI.fieldGroup: [{ position: 30, qualifier: 'AdminData' }]
+CreatedAt;
+
+@UI.fieldGroup: [{ position: 40, qualifier: 'AdminData' }]
+LastChangedBy;
+
+@UI.fieldGroup: [{ position: 50, qualifier: 'AdminData' }]
+LastChangedAt;
+}

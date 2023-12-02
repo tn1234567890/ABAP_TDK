@@ -1,0 +1,29 @@
+projection;
+strict ( 2 );
+use draft;
+
+define behavior for ZC_TDK_2_Employee //alias <alias_name>
+{
+  use create;
+  use update;
+  use delete;
+
+  use action Activate;
+  use action Discard;
+  use action Edit;
+  use action Prepare;
+  use action Resume;
+
+  use association _Requests { create; with draft; }
+}
+
+define behavior for ZC_TDK_2_Vac_Req //alias <alias_name>
+{
+  use update;
+  use delete;
+
+  use action ApproveRequest;
+  use action DeclineRequest;
+
+  use association _Employee { with draft; }
+}

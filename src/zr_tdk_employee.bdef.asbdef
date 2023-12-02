@@ -1,0 +1,113 @@
+managed implementation in class zbp_r_tdk_employee unique;
+strict ( 2 );
+with draft;
+
+define behavior for ZR_TDK_Employee alias Employee
+persistent table ztdk_employee
+draft table ztdk_employee_d
+lock master
+total etag LastChangedAt
+authorization master ( instance )
+//etag master <field_name>
+{
+  create;
+  update;
+  delete;
+  association _Demands { create; with draft; }
+  association _Requests { create; with draft; }
+
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Edit;
+  draft determine action Prepare;
+  draft action Resume;
+
+  field ( readonly, numbering : managed ) EmployeeUuid;
+  field ( readonly ) CreatedAt, CreatedBy, LastChangedAt, LastChangedBy;
+
+  mapping for ztdk_employee corresponding
+    {
+      EmployeeUuid  = employee_uuid;
+      EmployeeNr    = employee_nr;
+      FirstName     = first_name;
+      LastName      = last_name;
+      EntryDate     = entry_date;
+      CreatedAt     = created_at;
+      CreatedBy     = created_by;
+      LastChangedAt = last_changed_at;
+      LastChangedBy = last_changed_by;
+    }
+}
+define behavior for ZR_TDK_Vac_Req alias Request
+persistent table ztdk_vac_req
+lock dependent by _Employee
+draft table ztdk_vac_req_d
+authorization dependent by _Employee
+//etag master <field_name>
+{
+  update;
+  delete;
+
+  association _Employee { with draft; }
+
+  action ApproveRequest result [1] $self;
+  action DeclineRequest result [1] $self;
+
+  determination DetermineStatus on modify { create; }
+  determination DetermineStatusReqComment on modify { field ReqComment; }
+
+  determine action ValidateRequest
+  {
+    validation ValidateDates;
+  }
+  validation ValidateDates on save { create; }
+
+  field ( readonly, numbering : managed ) RequestUuid;
+  field ( mandatory : create ) Approver, StartDate, EndDate;
+  field ( readonly : update ) Approver, StartDate, EndDate;
+  field ( readonly ) EmployeeUuid, Status, CreatedAt, CreatedBy, LastChangedAt,
+  LastChangedBy;
+
+  mapping for ztdk_vac_req corresponding
+    {
+      RequestUuid   = request_uuid;
+      EmployeeUuid  = employee_uuid;
+      Approver      = approver;
+      StartDate     = start_date;
+      EndDate       = end_date;
+      ReqComment    = req_comment;
+      Status        = status;
+      CreatedAt     = created_at;
+      CreatedBy     = created_by;
+      LastChangedAt = last_changed_at;
+      LastChangedBy = last_changed_by;
+    }
+}
+
+define behavior for ZR_TDK_Vac_Dem alias Demand
+persistent table ztdk_vac_dem
+lock dependent by _Employee
+draft table ztdk_vac_dem_d
+authorization dependent by _Employee
+//etag master <field_name>
+{
+  update;
+  delete;
+  association _Employee { with draft; }
+
+  field ( readonly ) EmployeeUuid;
+  field ( readonly, numbering : managed ) DemUuid;
+  field ( readonly ) CreatedAt, CreatedBy, LastChangedAt, LastChangedBy;
+
+  mapping for ztdk_vac_dem corresponding
+    {
+      DemUuid       = dem_uuid;
+      EmployeeUuid  = employee_uuid;
+      CurrYear      = curr_year;
+      VacDays       = vac_days;
+      CreatedAt     = created_at;
+      CreatedBy     = created_by;
+      LastChangedAt = last_changed_at;
+      LastChangedBy = last_changed_by;
+    }
+}

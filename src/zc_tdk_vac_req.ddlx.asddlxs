@@ -1,0 +1,67 @@
+@Metadata.layer: #CUSTOMER
+@UI.headerInfo:
+{
+typeName: 'Request',
+typeNamePlural: 'Requests',
+title.value: 'ReqComment',
+description.value: 'StartDate'
+}
+annotate view ZC_TDK_Vac_Req with
+{
+  /* Facets */
+  @UI.facet:
+  [
+  { position: 10, targetQualifier: 'RequestData', label: 'Request Details',
+  type: #FIELDGROUP_REFERENCE },
+  { position: 20, targetQualifier: 'AdminData', label: 'Administrative Data',
+  type: #FIELDGROUP_REFERENCE }
+  ]
+  /* Actions */
+  
+  /* Fields */
+  @UI.fieldGroup: [{ position: 10, qualifier: 'AdminData' }]
+  RequestUuid;
+  
+  @UI.lineItem: [{ position: 20 }]
+  @UI.fieldGroup: [{ position: 20, qualifier: 'RequestData' }]
+  EmployeeUuid;
+  
+  @UI.lineItem: [{ position: 30 }]
+  @UI.fieldGroup: [{ position: 30, qualifier: 'RequestData' }]
+  Approver;
+  
+  @UI.lineItem: [{ position: 40 }]
+  @UI.fieldGroup: [{ position: 40, qualifier: 'RequestData' }]
+  StartDate;
+  
+  @UI.lineItem: [{ position: 50 }]
+  @UI.fieldGroup: [{ position: 50, qualifier: 'RequestData' }]
+  EndDate;
+  
+  /*
+  @UI.lineItem: [{ position: 55 }]
+  @UI.fieldGroup: [{ position: 55, qualifier: 'RequestData' }]
+  PlannedVacDays;
+  */
+  @UI.lineItem: [{ position: 60, criticality: 'StatusCriticality'}]
+  @UI.fieldGroup: [{ position: 60, qualifier: 'RequestData' }]
+  Status;
+  
+  @UI.lineItem: [{ position: 70 }]
+  @UI.fieldGroup: [{ position: 70, qualifier: 'RequestData' }]
+  ReqComment;
+  
+  /* Administrative Data */
+  @UI.fieldGroup: [{ position: 20, qualifier: 'AdminData' }]
+  CreatedBy;
+  
+  @UI.fieldGroup: [{ position: 30, qualifier: 'AdminData' }]
+  CreatedAt;
+  
+  @UI.fieldGroup: [{ position: 40, qualifier: 'AdminData' }]
+  LastChangedBy;
+  
+  @UI.fieldGroup: [{ position: 50, qualifier: 'AdminData' }]
+  LastChangedAt;
+  
+}
