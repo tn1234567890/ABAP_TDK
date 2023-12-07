@@ -55,6 +55,8 @@ authorization dependent by _Employee
 
   determination DetermineStatus on modify { create; }
   determination DetermineStatusReqComment on modify { field ReqComment; }
+  determination DetermineVacDays on modify { create; }
+
 
   determine action ValidateRequest
   {
@@ -65,7 +67,7 @@ authorization dependent by _Employee
   field ( readonly, numbering : managed ) RequestUuid;
   field ( mandatory : create ) Approver, StartDate, EndDate;
   field ( readonly : update ) Approver, StartDate, EndDate;
-  field ( readonly ) EmployeeUuid, Status, CreatedAt, CreatedBy, LastChangedAt,
+  field ( readonly ) EmployeeUuid, Status, VacDays, CreatedAt, CreatedBy, LastChangedAt,
   LastChangedBy;
 
   mapping for ztdk_vac_req corresponding
@@ -77,6 +79,7 @@ authorization dependent by _Employee
       EndDate       = end_date;
       ReqComment    = req_comment;
       Status        = status;
+      VacDays       = vac_days;
       CreatedAt     = created_at;
       CreatedBy     = created_by;
       LastChangedAt = last_changed_at;

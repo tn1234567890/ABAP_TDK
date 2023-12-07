@@ -17,10 +17,10 @@ type: #FIELDGROUP_REFERENCE },
 type: #FIELDGROUP_REFERENCE }
 ]
 /* Fields */
-@UI.fieldGroup: [{ position: 10, qualifier: 'AdminData' }]
+@UI.fieldGroup: [{ position: 10, qualifier: 'AdminData' , label: 'Demand UUID'}]
 DemUuid;
 
-@UI.lineItem: [{ position: 20 }]
+@UI.lineItem: [{ position: 20, label: 'Applicant' }]
 @UI.fieldGroup: [{ position: 20, qualifier: 'RequestData' }]
 EmployeeUuid;
 

@@ -13,6 +13,8 @@ CLASS lhc_Employee DEFINITION INHERITING FROM cl_abap_behavior_handler.
       IMPORTING keys FOR request~DetermineStatus.
     METHODS determinestatusreqcomment FOR DETERMINE ON MODIFY
       IMPORTING keys FOR request~DetermineStatusReqComment.
+    METHODS determinevacdays FOR DETERMINE ON MODIFY
+      IMPORTING keys FOR request~DetermineVacDays.
     METHODS validatedates FOR VALIDATE ON SAVE
       IMPORTING keys FOR request~ValidateDates.
 ENDCLASS.
@@ -35,6 +37,19 @@ CLASS lhc_Employee IMPLEMENTATION.
         message = NEW zcm_tdk_employee(
         textid = zcm_tdk_employee=>request_already_approved
         req_comment = request->ReqComment ) .
+        APPEND VALUE #( %tky = request->%tky
+        %element = VALUE #( Status = if_abap_behv=>mk-on )
+        %msg = message ) TO reported-request.
+        APPEND VALUE #( %tky = request->%tky ) TO failed-request.
+        DELETE requests INDEX sy-tabix.
+        CONTINUE.
+      ENDIF.
+
+      IF request->Status = 'A'.
+        message = NEW zcm_tdk_employee(
+        severity = if_abap_behv_message=>severity-error
+          textid = zcm_tdk_employee=>request_already_declined
+          req_comment = request->ReqComment ) .
         APPEND VALUE #( %tky = request->%tky
         %element = VALUE #( Status = if_abap_behv=>mk-on )
         %msg = message ) TO reported-request.
@@ -82,6 +97,19 @@ CLASS lhc_Employee IMPLEMENTATION.
         message = NEW zcm_tdk_employee( textid =
         zcm_tdk_employee=>request_already_declined
         req_comment = request->ReqComment ).
+        APPEND VALUE #( %tky = request->%tky
+        %element = VALUE #( Status = if_abap_behv=>mk-on )
+        %msg = message ) TO reported-request.
+        APPEND VALUE #( %tky = request->%tky ) TO failed-request.
+        DELETE requests INDEX sy-tabix.
+        CONTINUE.
+      ENDIF.
+
+      IF request->Status = 'G'.
+        message = NEW zcm_tdk_employee(
+        severity = if_abap_behv_message=>severity-error
+          textid = zcm_tdk_employee=>request_already_approved
+          req_comment = request->ReqComment ) .
         APPEND VALUE #( %tky = request->%tky
         %element = VALUE #( Status = if_abap_behv=>mk-on )
         %msg = message ) TO reported-request.
@@ -143,6 +171,39 @@ CLASS lhc_Employee IMPLEMENTATION.
     Status = 'B' ) ).
   ENDMETHOD.
 
+  METHOD determinevacdays.
+
+    "Read Requests
+    READ ENTITY IN LOCAL MODE zr_tdk_vac_req
+    ALL FIELDS
+    WITH CORRESPONDING #( keys )
+    RESULT DATA(requests).
+
+    LOOP AT requests INTO DATA(request).
+
+      "Calculation of Vacation Days
+      TRY.
+          DATA(calendar) = cl_fhc_calendar_runtime=>create_factorycalendar_runtime( 'SAP_DE_BW' ).
+        CATCH cx_fhc_runtime.
+          RETURN.
+      ENDTRY.
+
+      TRY.
+          DATA(working_days) = calendar->calc_workingdays_between_dates( iv_start = request-StartDate iv_end = request-EndDate ).
+        CATCH cx_fhc_runtime.
+          RETURN.
+      ENDTRY.
+
+      "Modify Requests
+      MODIFY ENTITY IN LOCAL MODE zr_tdk_vac_req
+      UPDATE FIELDS ( VacDays )
+      WITH VALUE #( FOR r IN requests
+      ( %tky = r-%tky
+      VacDays = working_days + 1 ) ).
+
+    ENDLOOP.
+
+  ENDMETHOD.
 
   METHOD validatedates.
     DATA message TYPE REF TO zcm_tdk_employee.

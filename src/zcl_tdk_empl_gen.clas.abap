@@ -32,9 +32,9 @@ CLASS zcl_tdk_empl_gen IMPLEMENTATION.
     DELETE FROM ztdk_vac_dem.
 
     "DBT Draft löschen
-    "    DELETE FROM ztdk_employe_d.
-    "    DELETE FROM ztdk_vac_req_d.
-    "    DELETE FROM ztdk_vac_dem_d.
+    DELETE FROM ztdk_employee_d.
+    DELETE FROM ztdk_vac_req_d.
+    DELETE FROM ztdk_vac_dem_d.
 
     "Admin Data für Employees
     employee-client = sy-mandt.
@@ -99,6 +99,7 @@ CLASS zcl_tdk_empl_gen IMPLEMENTATION.
     request-end_date = '20220710'.
     request-req_comment = 'Sommerurlaub'.
     request-status = 'G'.
+    request-vac_days = '6'.
     APPEND request TO requests.
 
     request-request_uuid = cl_system_uuid=>create_uuid_x16_static( ).
@@ -108,6 +109,7 @@ CLASS zcl_tdk_empl_gen IMPLEMENTATION.
     request-end_date = '20221230'.
     request-req_comment = 'Weihnachtsurlaub'.
     request-status = 'A'.
+    request-vac_days = '4'.
     APPEND request TO requests.
 
     request-request_uuid = cl_system_uuid=>create_uuid_x16_static( ).
@@ -117,6 +119,7 @@ CLASS zcl_tdk_empl_gen IMPLEMENTATION.
     request-end_date = '20221230'.
     request-req_comment = 'Weihnachtsurlaub (2.Versuch)'.
     request-status = 'G'.
+    request-vac_days = '3'.
     APPEND request TO requests.
 
     request-request_uuid = cl_system_uuid=>create_uuid_x16_static( ).
@@ -126,6 +129,7 @@ CLASS zcl_tdk_empl_gen IMPLEMENTATION.
     request-end_date = '20230614'.
     request-req_comment = ''.
     request-status = 'G'.
+    request-vac_days = '3'.
     APPEND request TO requests.
 
     request-request_uuid = cl_system_uuid=>create_uuid_x16_static( ).
@@ -135,6 +139,7 @@ CLASS zcl_tdk_empl_gen IMPLEMENTATION.
     request-end_date = '20231231'.
     request-req_comment = 'Winterurlaub'.
     request-status = 'B'.
+    request-vac_days = '6'.
     APPEND request TO requests.
 
     "Vacation Demands for Hans
@@ -167,6 +172,7 @@ CLASS zcl_tdk_empl_gen IMPLEMENTATION.
     request-employee_uuid = petra.
     request-req_comment = 'Weihnachtsurlaub'.
     request-status = 'B'.
+    request-vac_days = '3'.
     APPEND request TO requests.
 
     "Vacation Demand for Petra

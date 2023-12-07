@@ -19,11 +19,11 @@ annotate view ZC_TDK_Vac_Req with
   /* Actions */
   
   /* Fields */
-  @UI.fieldGroup: [{ position: 10, qualifier: 'AdminData' }]
+  @UI.fieldGroup: [{ position: 10, qualifier: 'AdminData', label: 'Request UUID'}]
   RequestUuid;
   
-  @UI.lineItem: [{ position: 20 }]
-  @UI.fieldGroup: [{ position: 20, qualifier: 'RequestData' }]
+  @UI.lineItem: [{ position: 20, label: 'Applicant' }]
+  @UI.fieldGroup: [{ position: 20, qualifier: 'RequestData', label: 'Applicant' }]
   EmployeeUuid;
   
   @UI.lineItem: [{ position: 30 }]
@@ -46,6 +46,10 @@ annotate view ZC_TDK_Vac_Req with
   @UI.lineItem: [{ position: 60, criticality: 'StatusCriticality'}]
   @UI.fieldGroup: [{ position: 60, qualifier: 'RequestData' }]
   Status;
+  
+  @UI.lineItem: [{ position: 65 }]
+  @UI.fieldGroup: [{ position: 65, qualifier: 'RequestData' }]
+  VacDays;
   
   @UI.lineItem: [{ position: 70 }]
   @UI.fieldGroup: [{ position: 70, qualifier: 'RequestData' }]

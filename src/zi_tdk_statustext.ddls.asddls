@@ -1,13 +1,14 @@
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'Status Text'
 
-define view entity ZI_TDK_StatusText as select from ZI_TDK_StatusVH
+define view entity ZI_TDK_StatusText as select from ztdk_vac_req
 {
-    key domain_name,
-    key value_position,
-    key language,
-    Status,
-    StatusText,
-    
-    concat_with_space(StatusText, Status, 1) as StatusName
+   key request_uuid as RequestUuid,
+   status as Status,
+   
+   
+   'Declined' as StatusTextA,
+   'Approved' as StatusTextG,
+   'Requested' as StatusTextB
+   
 }

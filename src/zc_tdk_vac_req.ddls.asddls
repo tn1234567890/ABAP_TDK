@@ -10,8 +10,9 @@ define view entity ZC_TDK_Vac_Req as projection on ZR_TDK_Vac_Req
     StartDate,
     EndDate,
     ReqComment,
-    @Consumption.valueHelpDefinition: [{ entity: { name: 'ZI_TDK_StatusVH', element: 'Status' } }]
+    @ObjectModel.text.element: [ 'StatusName' ]
     Status,
+    VacDays,
     
     /*Administrative Data*/
     CreatedBy,
@@ -22,6 +23,7 @@ define view entity ZC_TDK_Vac_Req as projection on ZR_TDK_Vac_Req
     /* Transient Data */
     StatusName,
     EmployeeName,
+    ApproverName,
     StatusCriticality,
     
     /* Associations */

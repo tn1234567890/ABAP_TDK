@@ -14,6 +14,9 @@ define view entity ZC_TDK_Vac_Dem as projection on ZR_TDK_Vac_Dem
     LastChangedBy,
     LastChangedAt,
     
+    /* Transient Data */
+    EmployeeName,
+    
     /* Associations */
     _Employee : redirected to parent ZC_TDK_Employee
 }

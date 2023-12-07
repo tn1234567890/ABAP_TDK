@@ -13,8 +13,10 @@ define view entity ZC_TDK_2_Vac_Req as projection on ZR_TDK_Vac_Req
     @Search.defaultSearchElement: true
     @Search.fuzzinessThreshold: 0.7
     ReqComment,
-    @Consumption.valueHelpDefinition: [{ entity: { name: 'ZI_TDK_StatusVH', element: 'StatusText' } }]
+    @Consumption.valueHelpDefinition: [{ entity: { name: 'ZI_TDK_StatusVH', element: 'Status' } }]
+    @ObjectModel.text.element: [ 'StatusName' ]
     Status,
+    VacDays,
     
     /* Administrative Data*/
     CreatedBy,
@@ -26,6 +28,7 @@ define view entity ZC_TDK_2_Vac_Req as projection on ZR_TDK_Vac_Req
     StatusCriticality,
     StatusName,
     EmployeeName,
+    ApproverName,
     
     /* Associations */
     _Employee : redirected to parent ZC_TDK_2_Employee
